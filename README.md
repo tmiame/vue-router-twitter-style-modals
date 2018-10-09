@@ -6,6 +6,9 @@ npm v6.2.0
 vue-cli v3.0.4
 ```
 
+## Demo
+https://tmiame-vue-router-twitter-style-modals.netlify.com/
+
 ## Project setup
 ```
 npm install
