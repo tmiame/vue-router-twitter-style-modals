@@ -10,11 +10,14 @@
             class="tweet_name u-hover"
             v-if="tweet.userId && tweet.userName"
             v-bind:to="{
-              name: 'user',
+              name: 'userTweets',
               params: { userId: tweet.userId }
             }"
             v-text="tweet.userName"
             v-on:click.stop />
+          <div class="tweet_media" v-if="tweet.media" v-bind:data-color="tweet.media">
+            {{ tweet.media }}
+          </div>
           <div class="tweet_text" v-if="tweet.text" v-text="tweet.text" />
         </div>
       </div>

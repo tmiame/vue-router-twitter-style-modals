@@ -2,10 +2,14 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import Home from './views/Home.vue'
+import DirectAccess from './views/DirectAccess.vue'
 import TweetModal from './views/TweetModal.vue'
 import TweetSingle from './views/TweetSingle.vue'
 import Users from './views/Users.vue'
 import User from './views/User.vue'
+import UserTweets from './views/UserTweets.vue'
+import UserProfile from './views/UserProfile.vue'
+import UserMedia from './views/UserMedia.vue'
 import Error from './views/Error.vue'
 
 Vue.use(Router)
@@ -23,6 +27,11 @@ export default new Router({
       }
     },
     {
+      path: '/directAccess',
+      name: 'directAccess',
+      component: DirectAccess
+    },
+    {
       path: '/users',
       name: 'users',
       component: Users
@@ -30,47 +39,102 @@ export default new Router({
     {
       path: '/:userId',
       name: 'user',
+      alias: 'userTweets',
       component: User,
       meta: {
         twModalView: true
-      }
+      },
+      children: [
+        {
+          path: '',
+          name: 'userTweets',
+          component: UserTweets
+        },
+        {
+          path: 'profile',
+          name: 'userProfile',
+          component: UserProfile
+        },
+        {
+          name: 'userMedia',
+          path: 'media',
+          component: UserMedia
+        }
+      ]
     },
     {
       path: '/:userId/tweet/:id',
       name: 'userTweet',
-      alias: 'tweet',
-      components: {
-        default: TweetSingle,
-        modal: false
-      },
       beforeEnter: (to, from, next) => {
-        // Default view
-        if (from.matched[0] && from.matched[0].components.default) {
-          to.matched[0].components.default = from.matched[0].components.default
+        const twModalView = from.matched.some(view => view.meta && view.meta.twModalView)
+
+        if (!twModalView) {
+          //
+          // For direct access
+          //
+          to.matched[0].components = {
+            default: TweetSingle,
+            modal: false
+          }
         }
-        // Modal view
-        if (from.name !== null && from.meta.twModalView) {
-          to.matched[0].components.modal = TweetModal
+
+        if (twModalView) {
+          //
+          // For twModalView access
+          //
+          if (from.matched.length > 1) {
+            // copy nested router
+            const childrenView = from.matched.slice(1, from.matched.length)
+            for (let view of childrenView) {
+              to.matched.push(view)
+            }
+          }
+          if (to.matched[0].components) {
+            // Rewrite components for `default`
+            to.matched[0].components.default = from.matched[0].components.default
+            // Rewrite components for `modal`
+            to.matched[0].components.modal = TweetModal
+          }
         }
+
         next()
       }
     },
     {
       path: '/tweet/:id',
       name: 'tweet',
-      components: {
-        default: TweetSingle,
-        modal: false
-      },
       beforeEnter: (to, from, next) => {
-        // Default view
-        if (from.matched[0] && from.matched[0].components.default) {
-          to.matched[0].components.default = from.matched[0].components.default
+        const twModalView = from.matched.some(view => view.meta && view.meta.twModalView)
+
+        if (!twModalView) {
+          //
+          // For direct access
+          //
+          to.matched[0].components = {
+            default: TweetSingle,
+            modal: false
+          }
         }
-        // Modal view
-        if (from.name !== null && from.meta.twModalView) {
-          to.matched[0].components.modal = TweetModal
+
+        if (twModalView) {
+          //
+          // For twModalView access
+          //
+          if (from.matched.length > 1) {
+            // copy nested router
+            const childrenView = from.matched.slice(1, from.matched.length)
+            for (let view of childrenView) {
+              to.matched.push(view)
+            }
+          }
+          if (to.matched[0].components) {
+            // Rewrite components for `default`
+            to.matched[0].components.default = from.matched[0].components.default
+            // Rewrite components for `modal`
+            to.matched[0].components.modal = TweetModal
+          }
         }
+
         next()
       }
     },

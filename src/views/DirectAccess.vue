@@ -1,6 +1,6 @@
 <template>
-  <div class="home">
-    <h1 class="title">"Tweets"</h1>
+  <div class="page">
+    <h1 class="title">"Direct access to tweet page"</h1>
     <TweetsComponent v-bind:tweets="items" />
   </div>
 </template>
@@ -11,7 +11,7 @@ import store from '@/store.js'
 import TweetsComponent from '@/components/Tweets'
 
 export default {
-  name: 'home',
+  name: 'directAccess',
   data: () => ({
     items: []
   }),

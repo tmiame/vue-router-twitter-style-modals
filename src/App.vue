@@ -7,6 +7,7 @@
       <div class="header_nav">
         <router-link to="/" class="u-hover">Home</router-link>
         <router-link to="/users" class="u-hover">Users</router-link>
+        <router-link to="/directAccess" class="u-hover">DirectAccess</router-link>
       </div>
       <div class="header_links">
         <a class="u-hover" href="https://github.com/tmiame/vue-router-twitter-style-modals">Github</a>
@@ -82,6 +83,48 @@ body {
   background-color: #42b983;
   color: #ffffff;
   left: 0;
+}
+
+.nestedRoutes {
+  background-color: rgba(#42b983, 0.2);
+  border-radius: 15px;
+  box-shadow: 0 10px 20px rgba(#000000, 0.035);
+  margin-bottom: 6vmin;
+  padding: 4vmin;
+}
+
+.nestedRoutes_title {
+  margin-bottom: 4vmin;
+  line-height: 1;
+  font-size: 200%;
+}
+
+.nestedRoutes_view {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.nestedRoutes_links {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-bottom: 4vmin;
+}
+.nestedRoutes_links a {
+  display: block;
+  text-transform: uppercase;
+  padding: 1em 2em;
+  margin-right: 1em;
+  background-color: #ffffff;
+  border-radius: 5px;
+  box-shadow: 0 10px 20px rgba(#000000, 0.035);
+  font-weight: bold;
+  &.router-link-exact-active {
+    background-color: #42b983;
+    color: #ffffff;
+    pointer-events: none;
+  }
 }
 
 .modal {
@@ -161,9 +204,28 @@ body {
 }
 .tweet_name {
   font-weight: 900;
-  margin-bottom: 0.5em;
+  margin-bottom: 1rem;
   font-size: 125%;
   display: block;
+  line-height: 1;
+}
+.tweet_media {
+  width: 100%;
+  height: 20vmin;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 150%;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #ffffff;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+  &[data-color='blue'] { background-color: blue; }
+  &[data-color='red'] { background-color: red; }
+  &[data-color='pink'] { background-color: pink; }
+  &[data-color='yellow'] { background-color: yellow; }
 }
 .tweet_text {
   font-weight: 400;

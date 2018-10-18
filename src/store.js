@@ -70,9 +70,13 @@ export default {
     }
   },
 
-  getRefineUserTweets (userId) {
+  getRefineUserTweets (userId, type = false) {
     return this.state.tweets.filter(tweet => {
-      return (tweet.userId === userId)
+      if (type === 'media') {
+        return (tweet.userId === userId && tweet.type === 'media')
+      } else {
+        return (tweet.userId === userId)
+      }
     })
   }
 }

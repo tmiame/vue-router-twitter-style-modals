@@ -4,7 +4,7 @@
     <div class="tweets" v-if="users && users.length">
       <div class="tweet tweet--user u-hover" v-for="(user, index) of users" v-bind:key="index">
         <router-link v-bind:to="{
-          name: 'user',
+          name: 'userTweets',
           params: { userId: user.userId }
         }">
           <div class="tweet_avatar" v-if="user.userColor" v-bind:style="{backgroundColor: user.userColor}" />
